@@ -7,7 +7,6 @@ on:
     branches: [ main ]
 
 jobs:
-  # root_npm_modules:
   root_node_modules: 
     name: Cache root node_modules
     runs-on: ubuntu-latest
@@ -50,7 +49,7 @@ jobs:
       - run: cd client && npm ci
         if: steps.client-node-modules-cache.outputs.cache-hit != 'true'
 
-  # svr_npm_modules:
+  svr_npm_modules:
    name: Cache server node_modules
     runs-on: ubuntu-latest
     steps:
