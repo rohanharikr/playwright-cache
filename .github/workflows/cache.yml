@@ -43,7 +43,7 @@ jobs:
         uses: actions/cache@v3
         id: client-node-modules-cache
         with:
-          path: node_modules
+          path: ./client/node_modules
           key: ${{ runner.os }}-client-node-modules-${{ hashFiles('/client/package-lock.json') }}
         
       - run: cd client && npm ci
@@ -60,7 +60,7 @@ jobs:
         uses: actions/cache@v3
         id: svr-node-modules-cache
         with:
-          path: node_modules
+          path: ./svr/node_modules
           key: ${{ runner.os }}-svr-node-modules-${{ hashFiles('/svr/package-lock.json') }}
         
       - run: cd svr && npm ci
