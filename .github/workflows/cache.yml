@@ -9,12 +9,14 @@ on:
 jobs:
   # root_npm_modules:
   root_node_modules: 
+    name: Cache root node_modules
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       # Remove "version" from the root and "" package block, then compute SHA256 hash
+      # Because we bump root package.json and dont want to lose existing valid caches
       - name: Compute hash after modifying package-lock.json
         run: |
           HASH=$(jq 'del(.version) | del(.packages[""].version)' package-lock.json | sha256sum | awk '{ print $1 }')
@@ -36,6 +38,7 @@ jobs:
   # svr_npm_modules:
 
   playwright:
+    name: Cache Playwright dependencies
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
