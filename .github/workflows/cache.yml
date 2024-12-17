@@ -2,6 +2,9 @@ name: Cache Dependencies
 
 on:
   workflow_dispatch: # manually trigger workflow
+  pull_request: # pr against main (pr opened, commits to pr)
+  branches:
+    - main
   # pull_request_target: # merge pr with main
   #   types: [ closed ]
   #   branches: [ main ]
