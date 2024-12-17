@@ -1,8 +1,8 @@
 name: Cache Dependencies
 
 on:
-  workflow_dispatch:
-  pull_request_target:
+  workflow_dispatch: # manually trigger workflow
+  pull_request_target: # merge pr with main
     types: [ closed ]
     branches: [ main ]
 
@@ -32,7 +32,7 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ env.PLAYWRIGHT_VERSION }}
-          lookup-only: true
+          lookup-only: true # does not restore cache
 
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'

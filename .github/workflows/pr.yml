@@ -1,8 +1,8 @@
-name: Playwright
+name: PR Checks
 
 on:
-  workflow_dispatch:
-  pull_request:
+  workflow_dispatch: # manually trigger workflow
+  pull_request: # pr against main (pr opened, commits to pr)
     branches:
       - main
 
@@ -20,8 +20,8 @@ jobs:
         id: playwright-version
         run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_ENV
 
-      - name: Cache Playwright binaries
-        uses: actions/cache/restore@v4
+      - name: Restore Playwright binaries
+        uses: actions/cache/restore@v4 # only restores / do not saves cache -- we do that separately in cache.yml
         id: playwright-cache 
         with:
           path: ~/.cache/ms-playwright
