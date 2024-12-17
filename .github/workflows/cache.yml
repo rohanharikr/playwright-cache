@@ -20,8 +20,6 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-root-node-modules-${{ hashFiles('package-lock.json') }}
-          - name: Checkout code
-        uses: actions/checkout@v4
         
       - run: npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
