@@ -29,6 +29,8 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-root-node-modules-${{ env.HASH }}
         
+      # just install packages at root, skips postinstalll scripts with --ignore-scripts flag
+      # we install and cache client/svr modules separately
       - run: npm ci --ignore-scripts
         if: steps.root-node-modules-cache.outputs.cache-hit != 'true'
 
