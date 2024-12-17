@@ -8,6 +8,17 @@ on:
 
 jobs:
   # root_npm_modules:
+  root_node_modules: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: root-node-modules-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-root-node-modules-${{ hashFiles('package-lock.json') }}
+      - run: npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
   # client_npm_modules:
 
