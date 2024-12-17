@@ -1,7 +1,7 @@
 name: PR Checks
 
-# on:
-#   workflow_dispatch: # manually trigger workflow
+on:
+  workflow_dispatch: # manually trigger workflow
 #   pull_request: # pr against main (pr opened, commits to pr)
 #     branches:
 #       - main
