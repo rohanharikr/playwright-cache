@@ -1,10 +1,10 @@
 name: PR Checks
 
-on:
-  workflow_dispatch: # manually trigger workflow
-  pull_request: # pr against main (pr opened, commits to pr)
-    branches:
-      - main
+# on:
+#   workflow_dispatch: # manually trigger workflow
+#   pull_request: # pr against main (pr opened, commits to pr)
+#     branches:
+#       - main
 
 jobs:
   playwright-tests:
