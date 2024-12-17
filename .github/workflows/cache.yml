@@ -44,7 +44,7 @@ jobs:
         id: client-node-modules-cache
         with:
           path: ./client/node_modules
-          key: ${{ runner.os }}-client-node-modules-${{ hashFiles('/client/package-lock.json') }}
+          key: ${{ runner.os }}-client-node-modules-${{ hashFiles('client/package-lock.json') }}
         
       - run: cd client && npm ci
         if: steps.client-node-modules-cache.outputs.cache-hit != 'true'
@@ -61,7 +61,7 @@ jobs:
         id: svr-node-modules-cache
         with:
           path: ./svr/node_modules
-          key: ${{ runner.os }}-svr-node-modules-${{ hashFiles('/svr/package-lock.json') }}
+          key: ${{ runner.os }}-svr-node-modules-${{ hashFiles('svr/package-lock.json') }}
         
       - run: cd svr && npm ci
         if: steps.svr-node-modules-cache.outputs.cache-hit != 'true'
