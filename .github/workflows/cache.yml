@@ -2,9 +2,9 @@ name: Cache Dependencies
 
 on:
   workflow_dispatch: # manually trigger workflow
-  pull_request_target: # merge pr with main
-    types: [ closed ]
-    branches: [ main ]
+  # pull_request_target: # merge pr with main
+  #   types: [ closed ]
+  #   branches: [ main ]
 
 jobs:
   # root_npm_modules:
