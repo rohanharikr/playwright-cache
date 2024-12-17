@@ -8,7 +8,7 @@ on:
 
 jobs:
   root_node_modules: 
-    name: Cache root node_modules
+    name: Root node_modules
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -33,7 +33,7 @@ jobs:
         if: steps.root-node-modules-cache.outputs.cache-hit != 'true'
 
   client_npm_modules:
-    name: Cache client node_modules
+    name: Client node_modules
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -44,13 +44,13 @@ jobs:
         id: client-node-modules-cache
         with:
           path: node_modules
-          key: ${{ runner.os }}-client-node-modules-${{ hashFiles(./client/package-lock.json) }}
+          key: ${{ runner.os }}-client-node-modules-${{ hashFiles('/client/package-lock.json') }}
         
       - run: cd client && npm ci
         if: steps.client-node-modules-cache.outputs.cache-hit != 'true'
 
   svr_npm_modules:
-    name: Cache server node_modules
+    name: Server node_modules
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -61,13 +61,13 @@ jobs:
         id: svr-node-modules-cache
         with:
           path: node_modules
-          key: ${{ runner.os }}-svr-node-modules-${{ hashFiles(./svr/package-lock.json) }}
+          key: ${{ runner.os }}-svr-node-modules-${{ hashFiles('/svr/package-lock.json') }}
         
       - run: cd svr && npm ci
         if: steps.svr-node-modules-cache.outputs.cache-hit != 'true'
 
   playwright:
-    name: Cache Playwright dependencies
+    name: Playwright
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
