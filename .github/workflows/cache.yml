@@ -50,7 +50,7 @@ jobs:
         if: steps.client-node-modules-cache.outputs.cache-hit != 'true'
 
   svr_npm_modules:
-   name: Cache server node_modules
+    name: Cache server node_modules
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
