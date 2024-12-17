@@ -28,6 +28,7 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-root-node-modules-${{ env.HASH }}
+          lookup-only: true # does not restore cache
         
       # Just install packages at root, skips postinstalll scripts with --ignore-scripts flag
       # We install and cache client/svr modules separately
@@ -47,6 +48,7 @@ jobs:
         with:
           path: ./client/node_modules
           key: ${{ runner.os }}-client-node-modules-${{ hashFiles('client/package-lock.json') }}
+          lookup-only: true # does not restore cache
         
       - run: cd client && npm ci
         if: steps.client-node-modules-cache.outputs.cache-hit != 'true'
@@ -64,6 +66,7 @@ jobs:
         with:
           path: ./svr/node_modules
           key: ${{ runner.os }}-svr-node-modules-${{ hashFiles('svr/package-lock.json') }}
+          lookup-only: true # does not restore cache
         
       - run: cd svr && npm ci
         if: steps.svr-node-modules-cache.outputs.cache-hit != 'true'
