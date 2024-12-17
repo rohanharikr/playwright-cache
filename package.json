@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test"
+    "test": "playwright test",
+    "postinstall": "cd client && npm i && cd ../svr && npm i"
   },
   "keywords": [],
   "author": "",

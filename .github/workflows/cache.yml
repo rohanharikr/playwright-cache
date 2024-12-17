@@ -30,12 +30,42 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-root-node-modules-${{ env.HASH }}
         
-      - run: npm ci
+      - run: npm ci --ignore-scripts
         if: steps.root-node-modules-cache.outputs.cache-hit != 'true'
 
   # client_npm_modules:
+  name: Cache client node_modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: client-node-modules-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-client-node-modules-${{ hashFiles(./client/package-lock.json) }}
+        
+      - run: cd client && npm ci
+        if: steps.client-node-modules-cache.outputs.cache-hit != 'true'
 
   # svr_npm_modules:
+   name: Cache server node_modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: svr-node-modules-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-svr-node-modules-${{ hashFiles(./svr/package-lock.json) }}
+        
+      - run: cd svr && npm ci
+        if: steps.svr-node-modules-cache.outputs.cache-hit != 'true'
 
   playwright:
     name: Cache Playwright dependencies
