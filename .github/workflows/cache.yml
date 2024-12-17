@@ -14,12 +14,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Remove "version" from the root and "" package block, then compute SHA256 hash
+      - name: Compute hash after modifying package-lock.json
+        run: |
+          HASH=$(jq 'del(.version) | del(.packages[""].version)' package-lock.json | sha256sum | awk '{ print $1 }')
+          echo "Computed Hash: $HASH"
+          echo "HASH=$HASH" >> $GITHUB_ENV
+
       - name: Cache node_modules
         uses: actions/cache@v3
         id: root-node-modules-cache
         with:
           path: node_modules
-          key: ${{ runner.os }}-root-node-modules-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-root-node-modules-${{ env.HASH }}
         
       - run: npm ci
         if: steps.root-node-modules-cache.outputs.cache-hit != 'true'
@@ -35,7 +42,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Get installed Playwright version
-        id: playwright-version
         run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_ENV
 
       - name: Cache Playwright binaries
