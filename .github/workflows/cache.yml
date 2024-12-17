@@ -11,12 +11,18 @@ jobs:
   root_node_modules: 
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Cache node_modules
         uses: actions/cache@v3
         id: root-node-modules-cache
         with:
           path: node_modules
           key: ${{ runner.os }}-root-node-modules-${{ hashFiles('package-lock.json') }}
+          - name: Checkout code
+        uses: actions/checkout@v4
+        
       - run: npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
@@ -29,9 +35,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Install dependencies
-        run: npm ci
 
       - name: Get installed Playwright version
         id: playwright-version
