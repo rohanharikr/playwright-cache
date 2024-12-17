@@ -33,8 +33,8 @@ jobs:
       - run: npm ci --ignore-scripts
         if: steps.root-node-modules-cache.outputs.cache-hit != 'true'
 
-  # client_npm_modules:
-  name: Cache client node_modules
+  client_npm_modules:
+    name: Cache client node_modules
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
